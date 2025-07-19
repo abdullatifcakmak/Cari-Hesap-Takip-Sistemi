@@ -43,13 +43,7 @@ class TransactionController extends Controller
 
         $firms->update();
 
-//        $total_borc = $firms->transactions()->where('type', 'borc')->sum('amount');
-//        $total_odeme = $firms->transactions()->where('type', 'odeme')->sum('amount');
-//        $total_alacak = $firms->transactions()->where('type', 'alacak')->sum('amount');
-//        $total_tahsilat = $firms->transactions()->where('type', 'tahsilat')->sum('amount');
-//
-//        $net_borc = $total_borc + $total_odeme;
-//        $net_alacak = -$total_alacak - $total_tahsilat;
+
 
         return back()->with('success', 'Borç/Alacak başarıyla eklendi');
     }
@@ -82,6 +76,43 @@ class TransactionController extends Controller
         else{
             return back()->with('error' , 'İşlem silinemedi');
         }
+
+    }
+
+    public function edit($id){
+        $transaction = Transaction::find($id);
+        return view('firms.updateTransaction', compact('transaction'));
+    }
+
+    public function update(Request $request, $id){
+        $transaction = Transaction::find($id);
+        $firms = Firm::find($transaction->firm_id);
+        $validated = $request->validate([
+            'type' => 'required|in:borc,alacak,tahsilat,odeme',
+            'description' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0.01'
+        ]);
+        $transaction->update($validated);
+
+        if ($transaction) {
+
+            if ($transaction->type == "borc" || $transaction->type == "odeme") {
+
+                $firms->debt += $transaction->amount;
+                $firms->balance += $transaction->amount;
+
+            } else {
+                $firms->credit -= $transaction->amount;
+                $firms->balance -= $transaction->amount;
+            }
+
+
+        }
+
+        $firms->update();
+
+
+        return redirect()->route('firmalar.show',$firms->id)->with('success', 'İşlem başarıyla güncellendi');
 
     }
 }

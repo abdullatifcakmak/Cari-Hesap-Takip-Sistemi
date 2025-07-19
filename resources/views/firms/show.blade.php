@@ -23,12 +23,10 @@
 
 
 
-
-
-{{--BURAYI KENDİN YAZ--}}
 <div class="my-3">
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}">Anasayfa</a></li>
             <li class="breadcrumb-item"><a href="{{ route('firmalar.index') }}">Firmalar</a></li>
 
             @foreach ($breadcrumbFirms as $item)
@@ -44,9 +42,6 @@
     </nav>
 
 </div>
-
-{{--BURAYA KADAR--}}
-
 
 
 
@@ -89,6 +84,7 @@
 </form>
 <hr>
 
+@if($firmSize <= 1)
 <div class="firm2">
 
     <h5>{{$firms->name}} Firmasının Cari Hesapları</h5>
@@ -140,7 +136,7 @@
 </div>
 
 <hr>
-
+@endif
 <div class="islemGecmisi">
     <h5>İşlem Geçmişi</h5>
     <table  class="table table-striped table-hover table-bordered table-responsive">
@@ -190,7 +186,7 @@
                     </form>
                 </td>
                 <td>
-                    <button class="btn btn-warning btn-sm">Düzenle</button>
+                    <a href="{{route('transaction.edit',$txn->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
                 </td>
             </tr>
 

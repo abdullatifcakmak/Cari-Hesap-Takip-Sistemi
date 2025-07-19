@@ -25,6 +25,21 @@ class FirmController extends Controller
     // Yeni firma oluştur
     public function store(Request $request)
     {
+        $id = $request->input('firm_id');
+        $firm = Firm::with('transactions')->find($id);
+        $breadcrumbFirms = [];
+        $current = $firm;
+
+        while ($current) {
+            $breadcrumbFirms[] = $current;
+            $current = $current->parent;
+        }
+
+        $firmSize = count($breadcrumbFirms);
+
+        if ($firmSize > 1) {
+            return back()->with('success', 'Lütfen geçerli bir firma için işlem yapınız!');
+        }
         $validated = $request->validate([
             'firm_id' => 'nullable',
             'name' => 'required|string|max:255',
@@ -59,22 +74,18 @@ class FirmController extends Controller
 
 
 
-
-
-//        BUNLARI KENDİN YAZ
-
         $breadcrumbFirms = [];
         $current = $firms;
 
+
         while ($current) {
             $breadcrumbFirms[] = $current;
-            $current = $current->parent; // bir üstüne çık
+            $current = $current->parent;
         }
 
-        $breadcrumbFirms = array_reverse($breadcrumbFirms); // sıralamayı düzelt
+        $breadcrumbFirms = array_reverse($breadcrumbFirms);
 
-//        BURAYA KADAR
-
+        $firmSize = count($breadcrumbFirms);
 
 
 
@@ -99,7 +110,7 @@ class FirmController extends Controller
 
         return view('firms.show', compact(
             'firms', 'transactions'
-           ,'deneme','breadcrumbFirms'
+           ,'deneme','breadcrumbFirms', 'firmSize'
         ));
     }
 
@@ -157,14 +168,7 @@ class FirmController extends Controller
             'amount' => $tutar
         ]);
 
-//        switch ($request->transaction_type) {
-//            case 'borc':      $firm->borc += $tutar; break;
-//            case 'alacak':    $firm->alacak += $tutar; break;
-//            case 'tahsilat':  $firm->alacak -= $tutar; break;
-//            case 'odeme':     $firm->borc -= $tutar; break;
-//        }
 
-//        $firm->save();
 
         return redirect()->route('firmalar.show', $firm->id)->with('success', 'İşlem başarıyla kaydedildi.');
 

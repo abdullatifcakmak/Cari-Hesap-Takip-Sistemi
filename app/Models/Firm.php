@@ -24,15 +24,12 @@ class Firm extends Model
 
 
 
-
-
-//    BUNU İDRAK ET
     public function parent()
     {
         return $this->belongsTo(Firm::class, 'firm_id');
     }
 
-//    BURAYA KADAR
+
 
 
 

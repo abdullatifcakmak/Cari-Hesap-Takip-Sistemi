@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('home');
 
 Route::get("/firmalar", [FirmController::class, "index"])->name("firmalar.index");
 Route::get("/firmalar/yeni/{firm?}", [FirmController::class, "create"])->name("firmalar.create");
@@ -24,4 +24,5 @@ Route::post("transaction/{id}", [TransactionController::class, "store"])->name("
 
 Route::delete("transaction/{id}", [TransactionController::class, "destroy"])->name("transaction.destroy");
 
-
+Route::get('/transaction/{id}/edit', [TransactionController::class, 'edit'])->name('transaction.edit');
+Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('transaction.update');
