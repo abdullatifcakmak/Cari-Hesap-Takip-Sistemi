@@ -115,4 +115,7 @@ class TransactionController extends Controller
         return redirect()->route('firmalar.show',$firms->id)->with('success', 'İşlem başarıyla güncellendi');
 
     }
+
+
+
 }

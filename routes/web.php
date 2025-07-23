@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FirmController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,8 @@ Route::delete("transaction/{id}", [TransactionController::class, "destroy"])->na
 
 Route::get('/transaction/{id}/edit', [TransactionController::class, 'edit'])->name('transaction.edit');
 Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('transaction.update');
+
+Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+Route::post('/stocks', [StockController::class, 'store'])->name('stocks.store');
+Route::get('/stocks/{id}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+Route::put("/stocks/{id}", [StockController::class, 'update'])->name('stocks.update');

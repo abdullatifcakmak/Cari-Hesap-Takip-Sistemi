@@ -17,10 +17,7 @@ class Firm extends Model
         return $this->hasMany(Transaction::class);
     }
 
-    public function stockMovements()
-    {
-        return $this->hasMany(StockMovement::class);
-    }
+
 
 
 

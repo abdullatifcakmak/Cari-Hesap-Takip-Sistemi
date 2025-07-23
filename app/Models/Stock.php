@@ -9,10 +9,20 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'unit', 'stock', 'buying_price', 'selling_price'];
+    protected $fillable = [
+        'product_code',
+        'name',
+        'supplier_name',
+        'stock',
+        'purchase_price',
+        'sale_price',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
-    public function stockMovements()
-    {
-        return $this->hasMany(StockMovement::class);
-    }
+
+
+
+
 }

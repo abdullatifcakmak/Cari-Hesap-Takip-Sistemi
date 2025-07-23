@@ -73,7 +73,7 @@
 
 
         @foreach($firms as $firm)
-            <tr onclick="window.location='{{ route('firmalar.show', $firm->id) }}'" style="cursor: pointer;">
+            <tr ondblclick="window.location='{{ route('firmalar.show', $firm->id) }}'" style="cursor: pointer;">
 
                 <td>{{ $firm->name }}</td>
                 <td>{{ $firm->phone }}</td>

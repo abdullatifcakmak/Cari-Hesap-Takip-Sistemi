@@ -12,7 +12,11 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::all();
+
+
+
+        return view('stocks.index' , compact('stocks'));
     }
 
     /**
@@ -28,7 +32,9 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Stock::create($request->all());
+
+        return redirect()->back()->with('success', 'Stok başarıyla eklendi.');
     }
 
     /**
@@ -42,17 +48,33 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Stock $stock)
+    public function edit($id)
     {
-        //
+        $stock = Stock::find($id);
+        return view('stocks.update', compact('stock'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Stock $stock)
+    public function update(Request $request, $id)
     {
-        //
+        $stock = Stock::find($id);
+
+
+        $validated = $request->validate([
+            'product_code' => 'required',
+            "name" => "required",
+            "supplier_name" => "required",
+            "stock" => "required",
+            "purchase_price" => "required",
+            "sale_price" => "required",
+
+
+        ]);
+
+        $stock->update($validated);
+        return redirect()->route('stocks.index')->with('success', 'Başarıyla güncellendi.');
     }
 
     /**
@@ -62,4 +84,8 @@ class StockController extends Controller
     {
         //
     }
+
+
+
+
 }
