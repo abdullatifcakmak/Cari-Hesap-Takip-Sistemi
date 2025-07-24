@@ -81,7 +81,8 @@ class TransactionController extends Controller
 
     public function edit($id){
         $transaction = Transaction::find($id);
-        return view('firms.updateTransaction', compact('transaction'));
+        $firm = Transaction::find($transaction->id)->firm;
+        return view('firms.updateTransaction', compact('transaction','firm'));
     }
 
     public function update(Request $request, $id){

@@ -32,9 +32,24 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        Stock::create($request->all());
+        $validated = $request->validate([
+            'product_code' => 'required|string|max:255|unique:stocks',
+            'name' => 'required|string|max:255',
+            'supplier_name' => 'required|nullable|numeric',
+            'stock' => 'required|email',
+            'purchase_price' => 'required|string',
+            'sale_price' => 'required'
+        ]);
 
-        return redirect()->back()->with('success', 'Stok başarıyla eklendi.');
+
+        $stock = Stock::create($validated);
+
+        if ($stock) {
+            return redirect()->back()->with('success', 'Stok başarıyla eklendi.');
+        }
+        else{
+            return redirect()->back()->with('error', 'Stok eklenemedi.');
+        }
     }
 
     /**

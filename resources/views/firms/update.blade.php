@@ -6,7 +6,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container my-5 col-md-6">
-
+<nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'; margin-top: 1rem;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Anasayfa</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('firmalar.index') }}">Firmalar</a></li>
+        @if($firm->firm_id != null)
+            <li class="breadcrumb-item"><a href="{{ route('firmalar.show', $firm->firm_id) }}">{{$firm->parent->name}}</a></li>
+        @endif
+        <li class="breadcrumb-item active" aria-current="page">{{$firm->name}}</li>
+    </ol>
+</nav>
 <div class="card p-5">
 
 <h1 class="text-center">Firma Güncelle</h1>

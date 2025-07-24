@@ -6,7 +6,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container my-5 col-md-6">
-
+<nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'; margin-top: 1rem;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Anasayfa</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('firmalar.index') }}">Firmalar</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('firmalar.show',$transaction->firm_id) }}">{{$firm->name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{$transaction->description}}</li>
+    </ol>
+</nav>
 <div class="card p-5">
 
     <h1 class="text-center">İşlem Güncelle</h1>
@@ -32,6 +39,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-success">Kaydet</button>
+        <a class="btn btn-danger" href="{{ url()->previous() }}" >İptal</a>
     </form>
 </div>
 
