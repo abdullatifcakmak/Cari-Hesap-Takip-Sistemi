@@ -13,6 +13,7 @@ class FirmController extends Controller
     {
         $firms = Firm::whereNull('firm_id')->get();
 
+
         return view('firms.index', compact('firms'));
     }
 
@@ -72,7 +73,10 @@ class FirmController extends Controller
         $firms = Firm::with('transactions')->find($id);
         $deneme = Firm::where('firm_id', '=' , $firms->id)->get();
 
-
+        $firmsBalance = 0;
+        foreach ($deneme as $dnm) {
+            $firmsBalance +=$dnm->balance;
+        }
 
         $breadcrumbFirms = [];
         $current = $firms;
@@ -110,7 +114,7 @@ class FirmController extends Controller
 
         return view('firms.show', compact(
             'firms', 'transactions'
-           ,'deneme','breadcrumbFirms', 'firmSize'
+           ,'deneme','breadcrumbFirms', 'firmSize','firmsBalance'
         ));
     }
 

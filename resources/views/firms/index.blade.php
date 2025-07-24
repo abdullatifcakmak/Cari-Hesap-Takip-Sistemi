@@ -61,8 +61,7 @@
 
                         <th>Ad</th>
                         <th>Telefon</th>
-                        <th>Email</th>
-                        <th>Adres</th>
+                        <th>Ekleme Tarihi ve Saati</th>
                         <th>Bakiye</th>
                         <th>Sil</th>
                         <th>Güncelle</th>
@@ -77,10 +76,9 @@
 
                 <td>{{ $firm->name }}</td>
                 <td>{{ $firm->phone }}</td>
-                <td>{{ $firm->email }}</td>
-                <td>{{ $firm->address }}</td>
+                <td>{{$firm->created_at->format('d/m/Y - H:i')}}</td>
                 <td>{{$firm->balance}}</td>
-                <td align="center" onclick="event.stopPropagation();">
+                <td align="center" ondblclick="event.stopPropagation();">
                     <form action="{{ route('firmalar.destroy', $firm->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -89,7 +87,7 @@
                         </button>
                     </form>
                 </td>
-                <td align="center" onclick="event.stopPropagation();">
+                <td align="center" ondblclick="event.stopPropagation();">
                     <a class="btn" href="{{ route('firmalar.edit', $firm->id) }}">
                         <i class="fa-solid fa-pen-to-square" style="color: green"></i>
                     </a>

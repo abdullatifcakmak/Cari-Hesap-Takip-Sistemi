@@ -80,9 +80,17 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy($id)
     {
-        //
+        $stock = Stock::find($id);
+
+        if ($stock) {
+            $stock->delete();
+            return back()->with("success","Firma başarıyla silindi!");
+        }
+        else{
+            return back()->with("error","Firma silinemedi!");
+        }
     }
 
 

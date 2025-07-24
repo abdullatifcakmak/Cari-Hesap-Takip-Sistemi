@@ -32,3 +32,4 @@ Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
 Route::post('/stocks', [StockController::class, 'store'])->name('stocks.store');
 Route::get('/stocks/{id}/edit', [StockController::class, 'edit'])->name('stocks.edit');
 Route::put("/stocks/{id}", [StockController::class, 'update'])->name('stocks.update');
+Route::delete("/stocks/{id}", [StockController::class, 'destroy'])->name('stocks.destroy');

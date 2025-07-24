@@ -116,8 +116,10 @@
                     <th>Stok Miktarı</th>
                     <th>Alış Fiyatı</th>
                     <th>Satış Fiyatı</th>
-                    <th>Satın Alma Tarihi</th>
-                    <th>Satış Tarihi</th>
+                    <th>Ekleme Tarihi ve Saati</th>
+                    <th>Güncelleme Tarihi ve Saati</th>
+
+                    <th>Sil</th>
                     <th>Güncelle</th>
 
                 </tr>
@@ -134,8 +136,17 @@
                     <td>{{$stock->stock}}</td>
                     <td>{{$stock->purchase_price}}</td>
                     <td>{{$stock->sale_price}}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$stock->created_at->format('d/m/Y - H:i')}}</td>
+                    <td>{{$stock->updated_at->format('d/m/Y - H:i')}}</td>
+                    <td align="center" onclick="event.stopPropagation();">
+                        <form action="{{ route('stocks.destroy', $stock->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn" type="submit" onclick="return confirm('Silmek istediğinize emin misiniz?')" >
+                                <i class="fa-solid fa-xmark" style="color: red;"></i>
+                            </button>
+                        </form>
+                    </td>
                     <td align="center" onclick="event.stopPropagation();">
                         <a class="btn" href="{{route('stocks.edit',$stock->id)}}">
                             <i class="fa-solid fa-pen-to-square" style="color: green"></i>

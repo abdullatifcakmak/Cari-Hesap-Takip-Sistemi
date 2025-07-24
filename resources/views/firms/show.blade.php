@@ -61,7 +61,8 @@
 <div class="alert alert-info">
     <strong>Net Borç:</strong> {{ number_format($firms->debt, 2, ',', '.') }} TL |
     <strong>Net Alacak:</strong> {{ number_format($firms->credit, 2, ',', '.') }} TL |
-    <strong>Bakiye</strong> {{ number_format($firms->balance, 2, ',', '.') }} TL
+    <strong>(Borç ve Alacak Kaldırılacak)</strong> |
+    <strong>Bakiye</strong> {{number_format($firmsBalance + $firms->balance, 2, ',', '.') }} TL
 </div>
 
 <form method="GET" class="row g-2 mb-3">
@@ -87,8 +88,13 @@
 @if($firmSize <= 1)
 <div class="firm2">
 
-    <h5>{{$firms->name}} Firmasının Cari Hesapları</h5>
-    <a class="btn btn-danger mb-2" href="{{ route('firmalar.create', $firms->id) }}">+ Yeni Firma</a>
+    <h5>{{ $firms->name }} Firmasının Cari Hesapları</h5>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <a class="btn btn-danger mb-2" href="{{ route('firmalar.create', $firms->id) }}">+ Yeni Firma</a>
+        <span><strong>Bakiye</strong> {{number_format($firmsBalance,2, ',', '.')}} TL</span>
+    </div>
+
+
 
 
     <table id="firmalar" class="table table-striped table-hover" border="1" cellpadding="10">
@@ -138,7 +144,16 @@
 <hr>
 @endif
 <div class="islemGecmisi">
-    <h5>İşlem Geçmişi</h5>
+
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">
+            İşlem Geçmişi
+
+        </h5>
+        <span class="ms-3"><strong>Bakiye:</strong> {{ number_format($firms->balance, 2, ',', '.') }} TL</span>
+    </div>
+
     <table  class="table table-striped table-hover table-bordered table-responsive">
 
         <thead>
