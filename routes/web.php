@@ -9,10 +9,11 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Auth::routes();
 
 Route::get('/dashboard', function () {
     return view('index');
-})->name('home');
+})->middleware('auth')->name('home');
 
 Route::get("/firmalar", [FirmController::class, "index"])->name("firmalar.index");
 Route::get("/firmalar/yeni/{firm?}", [FirmController::class, "create"])->name("firmalar.create");
@@ -57,4 +58,4 @@ Route::get('/home', function () {
 })->middleware('auth')->name('dashboard');
 
 
-Auth::routes();
+
