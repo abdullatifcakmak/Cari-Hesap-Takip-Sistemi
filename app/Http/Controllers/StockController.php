@@ -35,13 +35,14 @@ class StockController extends Controller
         $validated = $request->validate([
             'product_code' => 'required|string|max:255|unique:stocks',
             'name' => 'required|string|max:255',
-            'supplier_name' => 'required|nullable|numeric',
-            'stock' => 'required|email',
-            'purchase_price' => 'required|string',
-            'sale_price' => 'required',
-            'user_id' => auth()->id(),
+            'supplier_name' => 'nullable|numeric',
+            'stock' => 'required|integer|min:0',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
+
         ]);
 
+        $validated = array_merge($validated, ['user_id' => auth()->id()]);
 
         $stock = Stock::create($validated);
 

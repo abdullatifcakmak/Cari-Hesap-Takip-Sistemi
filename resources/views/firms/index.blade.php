@@ -29,7 +29,7 @@
     <div class="my-3">
         <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Anasayfa</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Anasayfa</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Firmalar</li>
 
 

@@ -26,10 +26,10 @@
 <div class="my-3">
     <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('home')}}">Anasayfa</a></li>
+            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Anasayfa</a></li>
             <li class="breadcrumb-item"><a href="{{ route('firmalar.index') }}">Firmalar</a></li>
-
             @foreach ($breadcrumbFirms as $item)
+
                 @if ($loop->last)
                     <li class="breadcrumb-item active" aria-current="page">{{ $item->name }}</li>
                 @else
@@ -49,12 +49,7 @@
 
 
 
-<!--Validate Errors-->
-@foreach($errors->all() as $error)
-    <script>
-        alert("{{$error}}");
-    </script>
-@endforeach
+
 
 <h3>{{ $firms->name }} firması detayları</h3>
 
@@ -239,7 +234,12 @@
 </div>
 
 
-
+<!--Validate Errors-->
+@foreach($errors->all() as $error)
+    <script>
+        alert("{{$error}}");
+    </script>
+@endforeach
 
 
 <script>

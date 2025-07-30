@@ -16,9 +16,6 @@ class Stock extends Model
         'stock',
         'purchase_price',
         'sale_price',
-        'created_at',
-        'updated_at',
-        'deleted_at',
         'user_id',
     ];
 

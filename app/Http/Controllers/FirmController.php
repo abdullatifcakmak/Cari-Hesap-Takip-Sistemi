@@ -14,6 +14,7 @@ class FirmController extends Controller
         $firms = Firm::where('user_id', auth()->id())->whereNull('firm_id')->get();
 
 
+
         return view('firms.index', compact('firms'));
     }
 
@@ -26,6 +27,8 @@ class FirmController extends Controller
     // Yeni firma oluştur
     public function store(Request $request)
     {
+
+
         $id = $request->input('firm_id');
         $firm = Firm::with('transactions')->find($id);
         $breadcrumbFirms = [];
@@ -41,14 +44,34 @@ class FirmController extends Controller
         if ($firmSize > 1) {
             return back()->with('success', 'Lütfen geçerli bir firma için işlem yapınız!');
         }
+
+
+
         $validated = $request->validate([
             'firm_id' => 'nullable',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|numeric',
             'email' => 'nullable|email',
             'address' => 'nullable|string',
+
+
+        ], [
+            'name.required' => 'Firma adı zorunludur.',
+            'name.string' => 'Firma adı metin olmalıdır.',
+            'name.max' => 'Firma adı en fazla 255 karakter olabilir.',
+
+            'phone.numeric' => 'Telefon numarası sadece rakamlardan oluşmalıdır.',
+
+            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
+
+            'address.string' => 'Adres metin olmalıdır.',
+
+        ]);
+
+        $validated = array_merge($validated, [
             'user_id' => auth()->id(),
         ]);
+
 
         $firms = Firm::create($validated);
 
@@ -73,11 +96,11 @@ class FirmController extends Controller
 
         $firms = Firm::with('transactions')
             ->where('id', $id)
-            ->where('user_id', auth()->id()) // sadece kendi firmasıysa
-            ->firstOrFail(); // yoksa 404
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
 
         $deneme = Firm::where('firm_id', $firms->id)
-            ->where('user_id', auth()->id()) // alt firmalarda da güvenlik!
+            ->where('user_id', auth()->id())
             ->get();
         $firmsBalance = 0;
         foreach ($deneme as $dnm) {

@@ -9,7 +9,7 @@ class Firm extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['firm_id', 'name', 'phone', 'email', 'address','debt', 'credit', 'balance'];
+    protected $fillable = ['firm_id', 'name', 'phone', 'email', 'address','debt', 'credit', 'balance','user_id'];
 
 
     public function transactions()

@@ -164,6 +164,29 @@
 
 
 
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    $('.table',).DataTable({
+        language: {
+
+            search: "Stok Ara:",
+            lengthMenu: "Sayfa başına _MENU_ kayıt göster",
+            info: "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
+            zeroRecords: "Kayıt bulunamadı",
+            paginate: {
+                previous: "Önceki",
+                next: "Sonraki"
+            },
+            infoEmpty: "Gösterilecek kayıt yok"
+        },
+        pageLength: 5,
+        lengthMenu: [[5, 15, 25, 50, 100], [5, 15, 25, 50, 100]]
+    });
+</script>
 </body>
 </html>
