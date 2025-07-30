@@ -95,7 +95,18 @@
             </div>
 
 
-
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>{{Session::get('error')}}</strong>
+                </div>
+            @endif
+            @if(Session::has('success'))
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>{{Session::get('success')}}</strong>
+                </div>
+            @endif
 
 
 
@@ -161,6 +172,7 @@
         </div>
     </div>
 </div>
+
 
 
 

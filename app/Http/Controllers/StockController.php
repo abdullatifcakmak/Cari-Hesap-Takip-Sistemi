@@ -32,6 +32,9 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         $validated = $request->validate([
             'product_code' => 'required|string|max:255|unique:stocks',
             'name' => 'required|string|max:255',
@@ -39,13 +42,40 @@ class StockController extends Controller
             'stock' => 'required|integer|min:0',
             'purchase_price' => 'required|numeric|min:0',
             'sale_price' => 'required|numeric|min:0',
+        ], [
+            'product_code.required' => 'Ürün kodu alanı zorunludur.',
+            'product_code.string' => 'Ürün kodu metin olmalıdır.',
+            'product_code.max' => 'Ürün kodu en fazla 255 karakter olabilir.',
+            'product_code.unique' => 'Bu ürün kodu zaten kayıtlı.',
 
+            'name.required' => 'Ürün adı zorunludur.',
+            'name.string' => 'Ürün adı metin olmalıdır.',
+            'name.max' => 'Ürün adı en fazla 255 karakter olabilir.',
+
+            'supplier_name.numeric' => 'Tedarikçi bilgisi sadece sayı olabilir.',
+
+            'stock.required' => 'Stok miktarı zorunludur.',
+            'stock.integer' => 'Stok miktarı tam sayı olmalıdır.',
+            'stock.min' => 'Stok miktarı en az 0 olabilir.',
+
+            'purchase_price.required' => 'Alış fiyatı zorunludur.',
+            'purchase_price.numeric' => 'Alış fiyatı sayı olmalıdır.',
+            'purchase_price.min' => 'Alış fiyatı negatif olamaz.',
+
+            'sale_price.required' => 'Satış fiyatı zorunludur.',
+            'sale_price.numeric' => 'Satış fiyatı sayı olmalıdır.',
+            'sale_price.min' => 'Satış fiyatı negatif olamaz.',
         ]);
+
 
         $validated = array_merge($validated, ['user_id' => auth()->id()]);
 
+
         $stock = Stock::create($validated);
 
+        return 1;
+
+        dd($stock);
         if ($stock) {
             return redirect()->back()->with('success', 'Stok başarıyla eklendi.');
         }
