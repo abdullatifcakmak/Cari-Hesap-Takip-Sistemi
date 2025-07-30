@@ -11,7 +11,7 @@ class FirmController extends Controller
     // Tüm firmaları listele
     public function index()
     {
-        $firms = Firm::whereNull('firm_id')->get();
+        $firms = Firm::where('user_id', auth()->id())->whereNull('firm_id')->get();
 
 
         return view('firms.index', compact('firms'));
@@ -47,6 +47,7 @@ class FirmController extends Controller
             'phone' => 'nullable|numeric',
             'email' => 'nullable|email',
             'address' => 'nullable|string',
+            'user_id' => auth()->id(),
         ]);
 
         $firms = Firm::create($validated);
@@ -70,9 +71,14 @@ class FirmController extends Controller
     public function show($id)
     {
 
-        $firms = Firm::with('transactions')->find($id);
-        $deneme = Firm::where('firm_id', '=' , $firms->id)->get();
+        $firms = Firm::with('transactions')
+            ->where('id', $id)
+            ->where('user_id', auth()->id()) // sadece kendi firmasıysa
+            ->firstOrFail(); // yoksa 404
 
+        $deneme = Firm::where('firm_id', $firms->id)
+            ->where('user_id', auth()->id()) // alt firmalarda da güvenlik!
+            ->get();
         $firmsBalance = 0;
         foreach ($deneme as $dnm) {
             $firmsBalance +=$dnm->balance;

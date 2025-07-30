@@ -26,7 +26,10 @@ class Firm extends Model
         return $this->belongsTo(Firm::class, 'firm_id');
     }
 
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 

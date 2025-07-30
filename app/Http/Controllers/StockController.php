@@ -12,7 +12,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::all();
+        $stocks = Stock::where('user_id', auth()->id())->get();
 
 
 
@@ -38,7 +38,8 @@ class StockController extends Controller
             'supplier_name' => 'required|nullable|numeric',
             'stock' => 'required|email',
             'purchase_price' => 'required|string',
-            'sale_price' => 'required'
+            'sale_price' => 'required',
+            'user_id' => auth()->id(),
         ]);
 
 
