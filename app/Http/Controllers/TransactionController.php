@@ -88,11 +88,29 @@ class TransactionController extends Controller
     public function update(Request $request, $id){
         $transaction = Transaction::find($id);
         $firms = Firm::find($transaction->firm_id);
+
+        $previousDebt = $transaction->debt;
+        $previousCredit = $transaction->credit;
+        $previousBalance = $transaction->balance;
+
+
         $validated = $request->validate([
             'type' => 'required|in:borc,alacak,tahsilat,odeme',
             'description' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0.01'
         ]);
+
+        if ($transaction->type == "borc" || $transaction->type == "odeme") {
+
+            $firms->debt -= $transaction->amount;
+            $firms->balance -= $transaction->amount;
+
+        } else {
+            $firms->credit += $transaction->amount;
+            $firms->balance += $transaction->amount;
+        }
+
+
         $transaction->update($validated);
 
         if ($transaction) {
