@@ -50,12 +50,13 @@
     <a class="btn btn-dark btn-custom" href="{{ route('stocks.index') }}">
         📦 Stoklara Git
     </a>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+    </form>
 </div>
 
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
-</form>
+
 
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Firm;
+use App\Models\Stock;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -93,7 +94,7 @@ class FirmController extends Controller
     // Belirli bir firmayı göster
     public function show($id)
     {
-
+        $parcalar = Stock::orderBy('name', 'asc')->get();
         $firms = Firm::with('transactions')
             ->where('id', $id)
             ->where('user_id', auth()->id())
@@ -143,7 +144,7 @@ class FirmController extends Controller
 
         return view('firms.show', compact(
             'firms', 'transactions'
-           ,'deneme','breadcrumbFirms', 'firmSize','firmsBalance'
+           ,'deneme','breadcrumbFirms', 'firmSize','firmsBalance', 'parcalar'
         ));
     }
 

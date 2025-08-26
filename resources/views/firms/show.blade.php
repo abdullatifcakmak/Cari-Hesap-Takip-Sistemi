@@ -6,6 +6,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <style>
         .satir { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .ekle { cursor: pointer; font-weight: bold; margin-top: 30px; }
@@ -210,6 +214,22 @@
     <h5>İşlem Ekle</h5>
     <form action="{{ route('firmalar.transaction', $firms->id) }}" method="POST" id="ekleForm"  class="mt-3">
         @csrf
+
+
+
+        <div class="mb-2">
+            <label class="form-label">Parça Seçiniz</label>
+            <select name="type" class="form-select" id="test" required>
+                <option value="">Seçiniz</option>
+                @foreach($parcalar as $parca)
+                    <option value="{{$parca->name}}">{{$parca->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
+
+
+
         <div class="mb-2">
             <label class="form-label">Açıklama</label>
             <input type="text" name="description" class="form-control" required>
@@ -249,6 +269,8 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 <script>
     $('.table',).DataTable({
@@ -266,6 +288,18 @@
         },
         pageLength: 5,
         lengthMenu: [[5, 15, 25, 50, 100], [5, 15, 25, 50, 100]]
+    });
+
+
+
+
+
+
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#test').select2();
     });
 </script>
 
